@@ -2,7 +2,7 @@
   "name": "react-tagger",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/react-stars.js",
+  "main": "dist/react-tagger.js",
   "babel": {
     "presets": [
       "react",
@@ -23,12 +23,10 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "dev": "babel src --out-dir dist --watch",
-    "build-example": "webpack -p --config=wepack.production.config.js",
-    "dev-example": "webpack-dev-server . --hot --inline"
+    "build-example": "webpack -p --config=webpack.production.config.js",
+    "dev-example": "webpack-dev-server . --config=webpack.config.js --hot --inline"
   },
-  "keywords": [
-
-  ],
+  "keywords": [],
   "author": "Oleg Berman",
   "license": "ISC",
   "devDependencies": {
@@ -41,5 +39,8 @@
     "webpack": "^1.12.15",
     "webpack-dev-server": "^1.14.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1"
+  }
 }

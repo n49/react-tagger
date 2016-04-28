@@ -15,7 +15,9 @@ class ReactTagger extends Component {
   }
 
   render() {
-    return <div />
+    return (
+      <div />
+    )
   }
 
 }
