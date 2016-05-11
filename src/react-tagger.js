@@ -34,8 +34,8 @@ class ReactTagger extends Component {
     this.state = {
       textIndent: 0,
       value: props.value,
-      suggestions: [],
       tags: props.tags,
+      suggestions: [],
       searchIndex: null
     }
   }
@@ -85,7 +85,17 @@ class ReactTagger extends Component {
   }
 
   suggest(e) {
-    const suggestions = this.state.searchIndex.search(e.target.value)
+    const { searchIndex } = this.state
+    const suggestions = this.flatten(searchIndex.search(e.target.value))
+    this.setState({
+      suggestions: suggestions
+    })
+  }
+
+  renderSuggestedTags() {
+    return this.state.suggestions.map((tag, i) => {
+      return <div key={i}>{tag}</div>
+    })
   }
 
   render() {
@@ -99,6 +109,9 @@ class ReactTagger extends Component {
         <input type="text" style={inputCSS} onKeyUp={this.suggest.bind(this)} />
         <div style={_tagsWrapperCSS} ref="tagWrapper">
           {this.renderValueTags()}
+        </div>
+        <div>
+          {this.renderSuggestedTags()}
         </div>
       </div>
     )
