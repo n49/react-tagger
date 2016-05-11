@@ -27,6 +27,10 @@ const _tagsWrapperCSS = {
   top: '-24px'
 }
 
+const _suggestionWrapCSS = {
+
+}
+
 class ReactTagger extends Component {
 
   constructor(props) {
@@ -92,9 +96,15 @@ class ReactTagger extends Component {
     })
   }
 
+  selectSuggestedTag(tag) {
+    this.setState({
+      value: [...this.state.value, tag]
+    })
+  }
+
   renderSuggestedTags() {
     return this.state.suggestions.map((tag, i) => {
-      return <div key={i}>{tag}</div>
+      return <div key={i} onClick={this.selectSuggestedTag.bind(this, tag)}>{tag}</div>
     })
   }
 
@@ -110,7 +120,7 @@ class ReactTagger extends Component {
         <div style={_tagsWrapperCSS} ref="tagWrapper">
           {this.renderValueTags()}
         </div>
-        <div>
+        <div style={_suggestionWrapCSS}>
           {this.renderSuggestedTags()}
         </div>
       </div>
