@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import Fuse from 'fuse.js'
 
 const _inputCSS = {
   display: 'block',
@@ -32,12 +33,29 @@ class ReactTagger extends Component {
     super(props)
     this.state = {
       textIndent: 0,
-      value: props.value
+      value: props.value,
+      suggestions: [],
+      tags: props.tags,
+      searchIndex: null
     }
   }
 
   componentDidMount() {
     this.setTextIndent()
+    this.indexTags(this.state.tags)
+  }
+
+  indexTags(tags) {
+    tags = tags.map((tag) => {
+      return { name: tag }
+    })
+    this.state.searchIndex = new Fuse(tags, {
+      keys: ['name']
+    })
+  }
+
+  flatten(array) {
+    return array.map(item => item.name)
   }
 
   componentWillReceiveProps() {
@@ -52,7 +70,7 @@ class ReactTagger extends Component {
 
   deleteTag(target) {
     this.setState({
-      value: this.state.value.filter(tag => tag !== target)
+      value: this.state.value.filter(tag => target !== tag)
     })
   }
 
@@ -66,6 +84,10 @@ class ReactTagger extends Component {
     })
   }
 
+  suggest(e) {
+    const suggestions = this.state.searchIndex.search(e.target.value)
+  }
+
   render() {
 
     let inputCSS = Object.assign({}, _inputCSS, {
@@ -74,7 +96,7 @@ class ReactTagger extends Component {
 
     return (
       <div className="react-tagger">
-        <input type="text" style={inputCSS} />
+        <input type="text" style={inputCSS} onKeyUp={this.suggest.bind(this)} />
         <div style={_tagsWrapperCSS} ref="tagWrapper">
           {this.renderValueTags()}
         </div>
