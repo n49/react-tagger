@@ -16,6 +16,10 @@ const _tagCSS = {
   marginRight: '5px'
 }
 
+const _tagDeleteCSS = {
+  display: 'inline-block'
+}
+
 const _tagsWrapperCSS = {
   display: 'inline-block',
   position: 'relative',
@@ -27,7 +31,8 @@ class ReactTagger extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      textIndent: 0
+      textIndent: 0,
+      value: props.value
     }
   }
 
@@ -45,9 +50,19 @@ class ReactTagger extends Component {
     })
   }
 
-  renderTags() {
-    return this.props.tags.map((tag) => {
-      return <div style={_tagCSS} key={tag.id}>{tag.name}</div>
+  deleteTag(target) {
+    this.setState({
+      value: this.state.value.filter(tag => tag !== target)
+    })
+  }
+
+  renderValueTags() {
+    return this.state.value.map((tag) => {
+      return <div style={_tagCSS} key={tag}>
+        <div style={_tagDeleteCSS}
+          onClick={this.deleteTag.bind(this, tag)}>x</div>
+        {tag}
+      </div>
     })
   }
 
@@ -61,7 +76,7 @@ class ReactTagger extends Component {
       <div className="react-tagger">
         <input type="text" style={inputCSS} />
         <div style={_tagsWrapperCSS} ref="tagWrapper">
-          {this.renderTags()}
+          {this.renderValueTags()}
         </div>
       </div>
     )

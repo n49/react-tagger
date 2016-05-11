@@ -4,23 +4,14 @@ import { render } from 'react-dom'
 import Tags from '../src/react-tagger'
 
 let tags = [
-  {
-    id: 1,
-    name: 'Programming'
-  },
-  {
-    id: 2,
-    name: 'Gaming'
-  },
-  {
-    id: 3,
-    name: 'Archery'
-  }
+  'Programming',
+  'Other',
+  'Sports'
 ]
 
 render(
   <div>
-    <Tags tags={tags} />
+    <Tags value={tags} tags={['one', 'two', 'three', ...tags]} />
   </div>,
   document.getElementById('root')
 )
