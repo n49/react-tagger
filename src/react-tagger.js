@@ -122,8 +122,11 @@ class ReactTagger extends Component {
   suggest(e) {
     const { searchIndex } = this.state
     const suggestions = this.flatten(searchIndex.search(e.target.value))
+    // remove that are already in use
     this.setState({
-      suggestions: suggestions
+      suggestions: suggestions.filter(tag => {
+        return this.state.value.indexOf(tag) === -1
+      })
     })
   }
 
