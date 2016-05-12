@@ -67,6 +67,9 @@ class ReactTagger extends Component {
   }
 
   setTextIndent() {
+    const { offsetWidth } = this.refs.tagWrapper
+    const { textIndent } = this.state
+    if(offsetWidth === textIndent) return;
     this.setState({
       textIndent: this.refs.tagWrapper.offsetWidth
     })
@@ -89,6 +92,9 @@ class ReactTagger extends Component {
   }
 
   suggest(e) {
+    if(e.key === 'Backspace' && e.target.value.length === 0) {
+      return this.deleteTag(this.state.value[this.state.value.length - 1])
+    }
     const { searchIndex } = this.state
     const suggestions = this.flatten(searchIndex.search(e.target.value))
     this.setState({
@@ -100,12 +106,21 @@ class ReactTagger extends Component {
     this.setState({
       value: [...this.state.value, tag]
     })
+    this.flushInput()
+  }
+
+  flushInput() {
+    this.refs.inputField.value = ''
   }
 
   renderSuggestedTags() {
     return this.state.suggestions.map((tag, i) => {
       return <div key={i} onClick={this.selectSuggestedTag.bind(this, tag)}>{tag}</div>
     })
+  }
+
+  componentDidUpdate() {
+    this.setTextIndent()
   }
 
   render() {
@@ -116,7 +131,11 @@ class ReactTagger extends Component {
 
     return (
       <div className="react-tagger">
-        <input type="text" style={inputCSS} onKeyUp={this.suggest.bind(this)} />
+        <input type="text"
+          style={inputCSS}
+          onKeyUp={this.suggest.bind(this)}
+          ref="inputField"
+        />
         <div style={_tagsWrapperCSS} ref="tagWrapper">
           {this.renderValueTags()}
         </div>
