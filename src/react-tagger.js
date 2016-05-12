@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Fuse from 'fuse.js'
 
+
 class ReactTagger extends Component {
 
   constructor(props) {
@@ -79,6 +80,7 @@ class ReactTagger extends Component {
   }
 
   handleKeyUp(e) {
+    this.shouldSelectSuggestionWithKeyboard(e)
     if(this.shouldAddTagFromType(e)) this.flushInput()
     this.suggest(e)
   }
@@ -132,7 +134,11 @@ class ReactTagger extends Component {
 
   renderSuggestedTags() {
     return this.state.suggestions.map((tag, i) => {
-      return <div key={i} onClick={this.selectSuggestedTag.bind(this, tag)}>{tag}</div>
+      return <div key={i}
+        className="react-tagger-suggestion-active"
+        onClick={this.selectSuggestedTag.bind(this, tag)}>
+        {tag}
+      </div>
     })
   }
 

@@ -36,3 +36,7 @@
   border: 1px solid #ddd;
   top: -20px;
 }
+
+.react-tagger-suggestion-active {
+  background-color: orange;
+}
