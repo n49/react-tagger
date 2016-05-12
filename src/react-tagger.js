@@ -48,7 +48,8 @@ class ReactTagger extends Component {
   }
 
   isInTags(target) {
-    let found = this.state.tags.filter(tag => target === tag)
+    target = target.toLowerCase()
+    let found = this.state.tags.filter(tag => target === tag.toLowerCase())
     return !!found[0]
   }
 
