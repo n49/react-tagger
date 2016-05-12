@@ -1,3 +1,38 @@
 .react-tagger {
 
 }
+
+.react-tagger-input {
+  display: block;
+  width: 100%;
+  height: 24px;
+  border: 1px solid #ddd;
+  font: 15px Helvetica;
+  outline: none;
+  padding-left: 10px;
+}
+
+.react-tagger-tag-wrapper {
+  display: inline-block;
+  position: relative;
+  top: -24px;
+}
+
+.react-tagger-tag {
+  display: inline-block;
+  textAlign: center;
+  background-color: yellow;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.react-tagger-delete-tag {
+  display: inline-block;
+}
+
+.react-tagger-suggestions-wrapper {
+  position: relative;
+  width: 200px;
+  border: 1px solid #ddd;
+  top: -20px;
+}

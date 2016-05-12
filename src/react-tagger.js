@@ -1,40 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Fuse from 'fuse.js'
 
-const _inputCSS = {
-  display: 'block',
-  width: '100%',
-  height: '24px',
-  border: '1px solid #ddd',
-  font: '15px Helvetica',
-  outline: 'none'
-}
-
-const _tagCSS = {
-  display: 'inline-block',
-  textAlign: 'center',
-  backgroundColor: 'yellow',
-  borderRadius: '4px',
-  marginRight: '5px'
-}
-
-const _tagDeleteCSS = {
-  display: 'inline-block'
-}
-
-const _tagsWrapperCSS = {
-  display: 'inline-block',
-  position: 'relative',
-  top: '-24px'
-}
-
-const _suggestionWrapCSS = {
-  position: 'relative',
-  width: '200px',
-  border: '1px solid #ddd',
-  top: '-20px'
-}
-
 class ReactTagger extends Component {
 
   constructor(props) {
@@ -103,8 +69,8 @@ class ReactTagger extends Component {
 
   renderValueTags() {
     return this.state.value.map((tag) => {
-      return <div style={_tagCSS} key={tag}>
-        <div style={_tagDeleteCSS}
+      return <div key={tag} className="react-tagger-tag">
+        <div className="react-tagger-delete-tag"
           onClick={this.deleteTag.bind(this, tag)}>x</div>
         {tag}
       </div>
@@ -112,10 +78,7 @@ class ReactTagger extends Component {
   }
 
   handleKeyUp(e) {
-    if(this.shouldAddTagFromType(e)) {
-      this.flushInput()
-      return
-    }
+    if(this.shouldAddTagFromType(e)) this.flushInput()
     this.suggest(e)
   }
 
@@ -137,6 +100,15 @@ class ReactTagger extends Component {
       return true
     }
     return false
+  }
+
+  shouldSelectSuggestionWithKeyboard(e) {
+    if(e.key === 'ArrowUp') {
+      // move it up
+    }
+    if(e.key === 'ArrowDown') {
+      // move it down
+    }
   }
 
   selectSuggestedTag(tag) {
@@ -169,27 +141,28 @@ class ReactTagger extends Component {
 
   render() {
 
-    let inputCSS = Object.assign({}, _inputCSS, {
+    const inputCSS = {
       textIndent: this.state.textIndent
-    })
+    }
 
-    let suggestionWrapCSS = Object.assign({}, _suggestionWrapCSS, {
+    let suggestionWrapCSS = {
       left: this.state.textIndent
-    })
+    }
 
     return (
       <div className="react-tagger">
         <input type="text"
-          style={inputCSS}
+          className="react-tagger-input"
           onKeyUp={this.handleKeyUp.bind(this)}
           onKeyDown={this.shouldDeletePrevTag.bind(this)}
           ref="inputField"
+          style={inputCSS}
         />
-        <div style={_tagsWrapperCSS} ref="tagWrapper">
+        <div className="react-tagger-tag-wrapper" ref="tagWrapper">
           {this.renderValueTags()}
         </div>
         {this.state.suggestions.length !== 0 ?
-          <div style={suggestionWrapCSS}>
+          <div className="react-tagger-suggestions-wrapper" style={suggestionWrapCSS}>
             {this.renderSuggestedTags()}
           </div>
         : ''}
