@@ -6,7 +6,8 @@ const _inputCSS = {
   width: '100%',
   height: '24px',
   border: '1px solid #ddd',
-  font: '15px Helvetica'
+  font: '15px Helvetica',
+  outline: 'none'
 }
 
 const _tagCSS = {
@@ -28,7 +29,10 @@ const _tagsWrapperCSS = {
 }
 
 const _suggestionWrapCSS = {
-
+  position: 'relative',
+  width: '200px',
+  border: '1px solid #ddd',
+  top: '-20px'
 }
 
 class ReactTagger extends Component {
@@ -62,10 +66,6 @@ class ReactTagger extends Component {
     return array.map(item => item.name)
   }
 
-  componentWillReceiveProps() {
-
-  }
-
   setTextIndent() {
     const { offsetWidth } = this.refs.tagWrapper
     const { textIndent } = this.state
@@ -91,10 +91,12 @@ class ReactTagger extends Component {
     })
   }
 
+  handleKeyUp(e) {
+    if(this.shouldDeletePrevTag(e)) return;
+    this.suggest(e)
+  }
+
   suggest(e) {
-    if(e.key === 'Backspace' && e.target.value.length === 0) {
-      return this.deleteTag(this.state.value[this.state.value.length - 1])
-    }
     const { searchIndex } = this.state
     const suggestions = this.flatten(searchIndex.search(e.target.value))
     this.setState({
@@ -102,15 +104,31 @@ class ReactTagger extends Component {
     })
   }
 
+  shouldDeletePrevTag(e) {
+    if(e.key === 'Backspace' && e.target.value.length === 0) {
+      this.deleteTag(this.state.value[this.state.value.length - 1])
+      this.flushSuggestions()
+      return true
+    }
+    return false
+  }
+
   selectSuggestedTag(tag) {
     this.setState({
       value: [...this.state.value, tag]
     })
     this.flushInput()
+    this.flushSuggestions()
   }
 
   flushInput() {
     this.refs.inputField.value = ''
+  }
+
+  flushSuggestions() {
+    this.setState({
+      suggestions: []
+    })
   }
 
   renderSuggestedTags() {
@@ -129,19 +147,26 @@ class ReactTagger extends Component {
       textIndent: this.state.textIndent
     })
 
+    let suggestionWrapCSS = Object.assign({}, _suggestionWrapCSS, {
+      left: this.state.textIndent
+    })
+
     return (
       <div className="react-tagger">
         <input type="text"
           style={inputCSS}
           onKeyUp={this.suggest.bind(this)}
+          onKeyDown={this.shouldDeletePrevTag.bind(this)}
           ref="inputField"
         />
         <div style={_tagsWrapperCSS} ref="tagWrapper">
           {this.renderValueTags()}
         </div>
-        <div style={_suggestionWrapCSS}>
-          {this.renderSuggestedTags()}
-        </div>
+        {this.state.suggestions.length !== 0 ?
+          <div style={suggestionWrapCSS}>
+            {this.renderSuggestedTags()}
+          </div>
+        : ''}
       </div>
     )
   }
