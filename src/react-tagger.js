@@ -69,7 +69,7 @@ class ReactTagger extends Component {
   setTextIndent() {
     const { offsetWidth } = this.refs.tagWrapper
     const { textIndent } = this.state
-    if(offsetWidth === textIndent) return;
+    if(offsetWidth === textIndent) return
     this.setState({
       textIndent: this.refs.tagWrapper.offsetWidth
     })
@@ -79,6 +79,26 @@ class ReactTagger extends Component {
     this.setState({
       value: this.state.value.filter(tag => target !== tag)
     })
+  }
+
+  isInTags(target) {
+    let found = this.state.tags.filter(tag => target === tag)
+    return !!found[0]
+  }
+
+  shouldAddTagFromType(e) {
+    let { value } = e.target
+    let lastChar = value.substr(value.length - 1, 1)
+    if(lastChar === ',' || lastChar === ' ') {
+      value = value.substr(0, value.length - 1)
+      if(!this.isInTags(value)) return false
+      this.setState({
+        value: [...this.state.value, value]
+      })
+      this.flushSuggestions()
+      return true
+    }
+    return false
   }
 
   renderValueTags() {
@@ -92,7 +112,10 @@ class ReactTagger extends Component {
   }
 
   handleKeyUp(e) {
-    if(this.shouldDeletePrevTag(e)) return;
+    if(this.shouldAddTagFromType(e)) {
+      this.flushInput()
+      return
+    }
     this.suggest(e)
   }
 
@@ -155,7 +178,7 @@ class ReactTagger extends Component {
       <div className="react-tagger">
         <input type="text"
           style={inputCSS}
-          onKeyUp={this.suggest.bind(this)}
+          onKeyUp={this.handleKeyUp.bind(this)}
           onKeyDown={this.shouldDeletePrevTag.bind(this)}
           ref="inputField"
         />
