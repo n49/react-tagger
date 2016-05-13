@@ -42,3 +42,6 @@ npm run build
 - Ability to add custom tags
 - Make plugin more flixible (more control with different props)
 - Add propTypes
+
+### Other projects by n49
+#### [react-stars](https://github.com/n49/react-stars) :star: - Star rating component for your React projects
