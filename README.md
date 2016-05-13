@@ -1,5 +1,5 @@
 # react-tagger
-###### Dead Simple Tag Input Component
+###### Dead Simple React Tag Input Component
 
 ### Install now
 ```
