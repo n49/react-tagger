@@ -11,7 +11,8 @@ class ReactTagger extends Component {
       value: props.value,
       tags: props.tags,
       suggestions: [],
-      searchIndex: null
+      searchIndex: null,
+      activeSuggestion: null
     }
   }
 
@@ -111,12 +112,33 @@ class ReactTagger extends Component {
   }
 
   shouldSelectSuggestionWithKeyboard(e) {
+    const { activeSuggestion, suggestions } = this.state
+    if(activeSuggestion === null && suggestions.length !== 0) {
+      this.setState({
+        activeSuggestion: 0
+      })
+      return
+    }
     if(e.key === 'ArrowUp') {
-      // move it up
+      let newActive = activeSuggestion - 1
+      if(newActive < 0) return
+      this.setState({
+        activeSuggestion: newActive
+      })
     }
     if(e.key === 'ArrowDown') {
-      // move it down
+      let newActive = activeSuggestion + 1
+      if(suggestions.length <= newActive) return
+      this.setState({
+        activeSuggestion: newActive
+      })
     }
+  }
+
+  setSuggestionActive(key) {
+    this.setState({
+      activeSuggestion: key
+    })
   }
 
   selectSuggestedTag(tag) {
@@ -133,14 +155,21 @@ class ReactTagger extends Component {
 
   flushSuggestions() {
     this.setState({
-      suggestions: []
+      suggestions: [],
+      activeSuggestion: null
     })
   }
 
   renderSuggestedTags() {
+    let defaultClass = 'react-tagger-suggestion'
     return this.state.suggestions.map((tag, i) => {
+      let className = defaultClass
+      if(i === this.state.activeSuggestion) {
+        className += ' react-tagger-suggestion-active'
+      }
       return <div key={i}
-        className="react-tagger-suggestion-active"
+        className={className}
+        onMouseOver={this.setSuggestionActive.bind(this, i)}
         onClick={this.selectSuggestedTag.bind(this, tag)}>
         {tag}
       </div>
@@ -152,15 +181,8 @@ class ReactTagger extends Component {
   }
 
   render() {
-
-    const inputCSS = {
-      textIndent: this.state.textIndent
-    }
-
-    let suggestionWrapCSS = {
-      left: this.state.textIndent
-    }
-
+    const inputCSS = { textIndent: this.state.textIndent }
+    const suggestionWrapCSS = { left: this.state.textIndent }
     return (
       <div className="react-tagger">
         <input type="text"

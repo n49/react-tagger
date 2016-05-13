@@ -47,9 +47,18 @@
   position: relative;
   width: 200px;
   border: 1px solid #ddd;
+  border-top: none;
+  border-bottom: none;
+  box-shadow: 0 0 3px #f7f7f7;
   top: -20px;
 }
 
 .react-tagger-suggestion-active {
-  background-color: orange;
+  background-color: #E5F9FF;
+}
+
+.react-tagger-suggestion {
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 }
