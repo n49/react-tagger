@@ -3,7 +3,7 @@
 
 ### Install now
 ```
-npm install react-tagger
+npm install react-tagger --save
 ```
 
 ### Demo
