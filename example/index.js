@@ -11,7 +11,7 @@ let tags = [
 
 render(
   <div>
-    <Tags value={tags} tags={['one', 'two', 'three', ...tags]} />
+    <Tags deleteIconURL='close.svg' value={tags} tags={['one', 'two', 'three', ...tags]} />
   </div>,
   document.getElementById('root')
 )

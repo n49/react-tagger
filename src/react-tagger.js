@@ -73,7 +73,12 @@ class ReactTagger extends Component {
     return this.state.value.map((tag) => {
       return <div key={tag} className="react-tagger-tag">
         <div className="react-tagger-delete-tag"
-          onClick={this.deleteTag.bind(this, tag)}>x</div>
+          onClick={this.deleteTag.bind(this, tag)}>
+          <img src={this.props.deleteIconURL}
+            width='13'
+            height='13'
+          />
+        </div>
         {tag}
       </div>
     })

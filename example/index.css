@@ -1,5 +1,5 @@
 .react-tagger {
-
+  font: 13px sans-serif;
 }
 
 .react-tagger-input {
@@ -21,13 +21,26 @@
 .react-tagger-tag {
   display: inline-block;
   textAlign: center;
-  background-color: yellow;
+  background-color: #f1f1f1;
   border-radius: 4px;
-  margin-right: 5px;
+  margin-right: 2px;
+  margin-left: 5px;
+  padding: 2px;
 }
 
 .react-tagger-delete-tag {
   display: inline-block;
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+
+.react-tagger-delete-tag img {
+  position: relative;
+  top: 2px;
+}
+
+.react-tagger-delete-tag:hover {
+  transform: scale(1.1);
 }
 
 .react-tagger-suggestions-wrapper {
