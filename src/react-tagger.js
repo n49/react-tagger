@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Fuse from 'fuse.js'
 
-
 class ReactTagger extends Component {
 
   constructor(props) {
@@ -44,9 +43,11 @@ class ReactTagger extends Component {
   }
 
   deleteTag(target) {
+    const newValue = this.state.value.filter(tag => target !== tag)
     this.setState({
-      value: this.state.value.filter(tag => target !== tag)
+      value: newValue
     })
+    this.notify(newValue)
   }
 
   isInTags(target) {
@@ -61,9 +62,11 @@ class ReactTagger extends Component {
     if(lastChar === ',' || lastChar === ' ') {
       value = value.substr(0, value.length - 1)
       if(!this.isInTags(value)) return false
+      const newValue = [...this.state.value, value]
       this.setState({
-        value: [...this.state.value, value]
+        value: newValue
       })
+      this.notify(newValue)
       this.flushSuggestions()
       return true
     }
@@ -113,7 +116,7 @@ class ReactTagger extends Component {
 
   controlSuggestionsWithKeys(e) {
     const { activeSuggestion, suggestions } = this.state
-    if(e.key === 'Enter') {
+    if(e.key === 'Enter' && suggestions[activeSuggestion]) {
       this.selectSuggestedTag(suggestions[activeSuggestion])
     }
     if(e.key === 'ArrowUp') {
@@ -139,9 +142,11 @@ class ReactTagger extends Component {
   }
 
   selectSuggestedTag(tag) {
+    const newValue = [...this.state.value, tag]
     this.setState({
-      value: [...this.state.value, tag]
+      value: newValue
     })
+    this.notify(newValue)
     this.flushInput()
     this.flushSuggestions()
   }
@@ -175,6 +180,12 @@ class ReactTagger extends Component {
 
   componentDidUpdate() {
     this.setTextIndent()
+  }
+
+  notify(value) {
+    if(this.props.onChange) {
+      this.props.onChange(value)
+    }
   }
 
   render() {

@@ -27,6 +27,7 @@
   margin-right: 2px;
   margin-left: 5px;
   padding: 2px;
+  cursor: default;
 }
 
 .react-tagger-delete-tag {
