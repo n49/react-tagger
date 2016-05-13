@@ -12,7 +12,7 @@ class ReactTagger extends Component {
       tags: props.tags,
       suggestions: [],
       searchIndex: null,
-      activeSuggestion: null
+      activeSuggestion: 0
     }
   }
 
@@ -86,7 +86,7 @@ class ReactTagger extends Component {
   }
 
   handleKeyUp(e) {
-    this.shouldSelectSuggestionWithKeyboard(e)
+    this.controlSuggestionsWithKeys(e)
     if(this.shouldAddTagFromType(e)) this.flushInput()
     this.suggest(e)
   }
@@ -111,13 +111,16 @@ class ReactTagger extends Component {
     return false
   }
 
-  shouldSelectSuggestionWithKeyboard(e) {
+  controlSuggestionsWithKeys(e) {
     const { activeSuggestion, suggestions } = this.state
-    if(activeSuggestion === null && suggestions.length !== 0) {
-      this.setState({
-        activeSuggestion: 0
-      })
-      return
+    // if(activeSuggestion === null && suggestions.length !== 0) {
+    //   this.setState({
+    //     activeSuggestion: 0
+    //   })
+    //   return
+    // }
+    if(e.key === 'Enter') {
+      this.selectSuggestedTag(suggestions[activeSuggestion])
     }
     if(e.key === 'ArrowUp') {
       let newActive = activeSuggestion - 1
@@ -156,7 +159,7 @@ class ReactTagger extends Component {
   flushSuggestions() {
     this.setState({
       suggestions: [],
-      activeSuggestion: null
+      activeSuggestion: 0
     })
   }
 
