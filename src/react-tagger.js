@@ -113,12 +113,6 @@ class ReactTagger extends Component {
 
   controlSuggestionsWithKeys(e) {
     const { activeSuggestion, suggestions } = this.state
-    // if(activeSuggestion === null && suggestions.length !== 0) {
-    //   this.setState({
-    //     activeSuggestion: 0
-    //   })
-    //   return
-    // }
     if(e.key === 'Enter') {
       this.selectSuggestedTag(suggestions[activeSuggestion])
     }
