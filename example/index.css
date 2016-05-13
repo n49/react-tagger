@@ -21,7 +21,7 @@
 
 .react-tagger-tag {
   display: inline-block;
-  textAlign: center;
+  text-align: center;
   background-color: #f1f1f1;
   border-radius: 2px;
   margin-right: 2px;
