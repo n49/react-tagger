@@ -9,9 +9,14 @@ const fixedWidthLayout = {
 }
 
 let tags = [
-  'Programming',
-  'Other',
-  'Sports'
+  'javascript',
+  'c++',
+  'java',
+  'scala',
+  'pascal',
+  'brainfuck',
+  'go',
+  'python'
 ]
 
 
@@ -24,8 +29,7 @@ render(
   <div style={fixedWidthLayout}>
     <Tags
       deleteIconURL='close.svg'
-      value={tags}
-      tags={['one', 'two', 'three', ...tags]}
+      tags={tags}
       onChange={tagsChanged}
     />
   </div>,

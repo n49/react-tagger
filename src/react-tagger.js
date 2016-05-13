@@ -7,8 +7,8 @@ class ReactTagger extends Component {
     super(props)
     this.state = {
       textIndent: 0,
-      value: props.value,
-      tags: props.tags,
+      value: props.value || [],
+      tags: props.tags || [],
       suggestions: [],
       searchIndex: null,
       activeSuggestion: 0
