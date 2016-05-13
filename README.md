@@ -1,11 +1,13 @@
 # react-tagger
 ###### Dead Simple Tag Input Component
-![](http://i.imgur.com/54SO0GR.gif)
 
 ### Install now
 ```
-
+npm install react-tagger
 ```
+
+### Demo
+![](http://i.imgur.com/54SO0GR.gif)
 
 ### API
 
