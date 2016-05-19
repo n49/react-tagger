@@ -1,6 +1,12 @@
 # react-tagger
 ###### Dead Simple React Tag Input Component
 
+Dead Simple React Tag Input Component with Suggest, readonly, flexible with custom CSS, plus custom delete icon.
+
+
+
+
+
 ### Demo
 ![](http://i.imgur.com/54SO0GR.gif)
 
