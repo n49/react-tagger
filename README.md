@@ -1,13 +1,13 @@
 # react-tagger
 ###### Dead Simple React Tag Input Component
 
+### Demo
+![](http://i.imgur.com/54SO0GR.gif)
+
 ### Install now
 ```
 npm install react-tagger --save
 ```
-
-### Demo
-![](http://i.imgur.com/54SO0GR.gif)
 
 ### API
 
@@ -15,8 +15,9 @@ npm install react-tagger --save
 | ------------- | ------------- | -----    | -------------
 | tags          | Array         | []       | All available tags
 | value         | Array         | []       | Currently *selected* tags
-| deleteIconURL | String        | -       | Path to the icon that goes to the left side of the tag (delete button)
-| onChange      | Function      | -       | Callback function that is called every time tag selection changes
+| deleteIconURL | String        | -        | Path to the icon that goes to the left side of the tag (delete button)
+| onChange      | Function      | -        | Callback function that is called every time tag selection changes
+| readonly      | Boolean       | false    | If you want only demonstration for your **value** tags
 
 ### Styling
 
