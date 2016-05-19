@@ -89,6 +89,7 @@ class ReactTagger extends Component {
   }
 
   handleKeyUp(e) {
+    if(this.props.readonly) return
     this.controlSuggestionsWithKeys(e)
     if(this.shouldAddTagFromType(e)) this.flushInput()
     this.suggest(e)
@@ -106,6 +107,7 @@ class ReactTagger extends Component {
   }
 
   shouldDeletePrevTag(e) {
+    if(this.props.readonly) return
     if(e.key === 'Backspace' && e.target.value.length === 0) {
       this.deleteTag(this.state.value[this.state.value.length - 1])
       this.flushSuggestions()
@@ -199,6 +201,7 @@ class ReactTagger extends Component {
           onKeyDown={this.shouldDeletePrevTag.bind(this)}
           ref="inputField"
           style={inputCSS}
+          disabled={!!this.props.readonly}
         />
         <div className="react-tagger-tag-wrapper" ref="tagWrapper">
           {this.renderValueTags()}

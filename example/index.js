@@ -32,6 +32,13 @@ render(
       tags={tags}
       onChange={tagsChanged}
     />
+    <Tags
+      deleteIconURL='close.svg'
+      tags={tags}
+      onChange={tagsChanged}
+      readonly={true}
+      value={['javascript', 'c++']}
+    />
   </div>,
   document.getElementById('root')
 )
