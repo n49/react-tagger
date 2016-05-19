@@ -27,11 +27,13 @@ const tagsChanged = (tags) => {
 
 render(
   <div style={fixedWidthLayout}>
+    <h3>Editable</h3>
     <Tags
       deleteIconURL='close.svg'
       tags={tags}
       onChange={tagsChanged}
     />
+    <h3>Readonly</h3>
     <Tags
       deleteIconURL='close.svg'
       tags={tags}

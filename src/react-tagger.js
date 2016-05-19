@@ -43,6 +43,7 @@ class ReactTagger extends Component {
   }
 
   deleteTag(target) {
+    if(this.props.readonly) return
     const newValue = this.state.value.filter(tag => target !== tag)
     this.setState({
       value: newValue
